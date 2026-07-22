@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Analytics | LustyVixens</title>
+  <link rel="stylesheet" href="assets/styles.css">
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="index.html"><img class="brand-logo" src="assets/lusty-vixens-logo.png" alt="LustyVixens"></a>
+    <nav class="nav"><a href="creator.html">Creator Upload</a><a href="admin.html">Admin</a><a href="analytics.html">Analytics</a><a href="legal/dmca.html">DMCA</a></nav>
+  </header>
+  <main class="page">
+    <div class="page-head">
+      <p class="eyebrow">Analytics dashboard</p>
+      <h1>Free metrics foundation</h1>
+      <p class="lead">Tracks local submissions now and defines the GA4 event map for production later.</p>
+    </div>
+    <div class="kpis">
+      <div class="kpi"><strong id="metric-submissions">0</strong><span>Total submissions</span></div>
+      <div class="kpi"><strong id="metric-links">0</strong><span>Link submissions</span></div>
+      <div class="kpi"><strong id="metric-files">0</strong><span>File submissions</span></div>
+      <div class="kpi"><strong id="metric-creators">0</strong><span>Creators</span></div>
+    </div>
+    <section class="dashboard-grid">
+      <article class="panel">
+        <h3>GA4 events to add</h3>
+        <p><code>creator_form_view</code>, <code>creator_submit</code>, <code>video_source_link</code>, <code>video_source_file</code>, <code>admin_export</code>, <code>outbound_affiliate_click</code>.</p>
+      </article>
+      <article class="panel">
+        <h3>Conversion targets</h3>
+        <p>Creator submit rate, approved video rate, publish rate, affiliate click-through, email signup rate, and returning visitor rate.</p>
+      </article>
+      <article class="panel">
+        <h3>Free tools</h3>
+        <p>Google Analytics 4, Google Search Console, Cloudflare analytics, and JSON exports from the admin queue.</p>
+      </article>
+    </section>
+  </main>
+  <script src="assets/app.js"></script>
+</body>
+</html>

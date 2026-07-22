@@ -1,0 +1,13 @@
+name: Backup Reminder
+
+on:
+  schedule:
+    - cron: "0 9 * * *"
+  workflow_dispatch:
+
+jobs:
+  reminder:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Reminder
+        run: echo "Export admin JSON, commit legal/template changes, and verify creator contact backup."

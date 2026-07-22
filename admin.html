@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Admin | LustyVixens</title>
+  <link rel="stylesheet" href="assets/styles.css">
+  <style>
+    .auth-gate { position: fixed; inset: 0; background: var(--bg); display: flex; align-items: center; justify-content: center; z-index: 999; }
+    .auth-form { background: var(--panel); border: 1px solid var(--line); border-radius: 8px; padding: 32px; max-width: 320px; }
+    .auth-form input { width: 100%; padding: 10px; margin: 12px 0; border: 1px solid var(--line); background: var(--panel-2); color: var(--text); border-radius: 6px; }
+    .auth-form button { width: 100%; padding: 12px; margin-top: 16px; background: var(--accent); color: white; border: none; border-radius: 6px; font-weight: 700; cursor: pointer; }
+  </style>
+</head>
+<body>
+  <div id="auth-gate" class="auth-gate">
+    <div class="auth-form">
+      <h2 style="margin: 0 0 12px; color: var(--text);">Admin Access</h2>
+      <p style="color: var(--muted); margin: 0 0 16px; font-size: 14px;">Enter password to access submission queue.</p>
+      <input type="password" id="auth-pass" placeholder="Password" />
+      <button onclick="checkAdminAuth()">Access</button>
+    </div>
+  </div>
+
+  <header class="topbar" style="display: none;">
+    <a class="brand" href="index.html"><img class="brand-logo" src="assets/lusty-vixens-logo.png" alt="LustyVixens"></a>
+    <nav class="nav"><a href="creator.html">Creator Upload</a><a href="admin.html">Admin</a><a href="analytics.html">Analytics</a><a href="legal/dmca.html">DMCA</a></nav>
+  </header>
+  <main class="page" style="display: none;">
+    <div class="page-head">
+      <p class="eyebrow">Admin panel</p>
+      <h1>Submission queue</h1>
+      <p class="lead">A free local admin view for reviewing creator submissions before you connect a real backend.</p>
+    </div>
+    <div class="toolbar">
+      <div class="actions">
+        <a class="button secondary" href="creator.html">Add Submission</a>
+        <button class="primary" id="export-json" type="button">Export JSON Backup</button>
+      </div>
+      <button class="secondary" id="clear-demo" type="button">Clear Demo Data</button>
+    </div>
+    <section class="panel table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Status</th>
+            <th>Title</th>
+            <th>Creator</th>
+            <th>Category</th>
+            <th>Source</th>
+            <th>Submitted</th>
+          </tr>
+        </thead>
+        <tbody id="submission-rows"></tbody>
+      </table>
+    </section>
+  </main>
+  <script src="assets/app.js"></script>
+</body>
+</html>

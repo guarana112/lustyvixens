@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Creator Upload | LustyVixens</title>
+  <link rel="stylesheet" href="assets/styles.css">
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="index.html"><img class="brand-logo" src="assets/lusty-vixens-logo.png" alt="LustyVixens"></a>
+    <nav class="nav"><a href="creator.html">Creator Upload</a><a href="admin.html">Admin</a><a href="analytics.html">Analytics</a><a href="legal/dmca.html">DMCA</a></nav>
+  </header>
+  <main class="page">
+    <div class="page-head">
+      <p class="eyebrow">Creator intake</p>
+      <h1>Submit a licensed video</h1>
+      <p class="lead">Use a legal video link or upload a file from your computer. Only submit content you own, created, or are authorized to distribute.</p>
+    </div>
+
+    <div class="notice">This free demo stores submissions in your browser only. To go live, connect the same form fields to Formspree, Supabase, or your Node API.</div>
+
+    <section class="panel" style="margin-top:18px;">
+      <div class="tabs" role="tablist" aria-label="Upload source">
+        <button class="tab" type="button" data-tab="link">Paste Link</button>
+        <button class="tab" type="button" data-tab="file">Upload File</button>
+      </div>
+
+      <form id="creator-form" class="form-grid">
+        <input type="hidden" name="source" id="source" value="link">
+        <div class="field">
+          <label for="creatorName">Creator name</label>
+          <input id="creatorName" name="creatorName" autocomplete="name" required>
+        </div>
+        <div class="field">
+          <label for="creatorEmail">Creator email</label>
+          <input id="creatorEmail" name="creatorEmail" type="email" autocomplete="email" required>
+        </div>
+        <div class="field">
+          <label for="title">Video title</label>
+          <input id="title" name="title" required>
+        </div>
+        <div class="field">
+          <label for="category">Category</label>
+          <select id="category" name="category" required>
+            <option value="">Choose category</option>
+            <option value="amateur">Amateur</option>
+            <option value="asian">Asian</option>
+            <option value="couples">Couples</option>
+            <option value="solo">Solo</option>
+            <option value="featured">Featured</option>
+          </select>
+        </div>
+        <div class="field full" data-source-panel="link">
+          <label for="videoUrl">Video link</label>
+          <input id="videoUrl" name="videoUrl" type="url" placeholder="https://creator-owned-host.example/video.mp4">
+        </div>
+        <div class="field full hidden" data-source-panel="file">
+          <label for="videoFile">Video file from PC (max 500MB)</label>
+          <input id="videoFile" name="videoFile" type="file" accept="video/*" data-max-size="500">
+          <p id="file-feedback" style="font-size: 13px; color: var(--muted); margin: 8px 0 0;"></p>
+        </div>
+        <div class="field full">
+          <label for="notes">Notes</label>
+          <textarea id="notes" name="notes" placeholder="Performer names, release notes, license references, or Voe target folder."></textarea>
+        </div>
+        <label class="check full">
+          <input type="checkbox" name="rightsConfirmed" required>
+          <span>I confirm I am 18+, all performers are 18+, and I own or have written permission to distribute this content.</span>
+        </label>
+        <div class="full actions">
+          <button class="primary" type="submit">Save Submission</button>
+          <a class="button secondary" href="legal/terms.html">Read Terms</a>
+        </div>
+      </form>
+      <p id="form-result" class="notice hidden" style="margin-top:16px;"></p>
+    </section>
+  </main>
+  <script src="assets/app.js"></script>
+</body>
+</html>
