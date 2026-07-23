@@ -1,0 +1,230 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex,nofollow">
+  <title>How to Add a Video | LustyVixens</title>
+  <link rel="stylesheet" href="assets/styles.css">
+  <style>
+    .tut { width: min(880px, calc(100% - 36px)); margin: 0 auto; padding: 42px 0 80px; }
+    .step { display: grid; grid-template-columns: 56px 1fr; gap: 20px; margin-bottom: 40px; }
+    .step-num {
+      width: 56px; height: 56px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      background: var(--accent); color: #fff; font-size: 24px; font-weight: 900;
+    }
+    .step-body h2 { font-size: 24px; margin-bottom: 10px; }
+    .step-body p { color: var(--muted); line-height: 1.6; margin: 0 0 12px; }
+    .screen {
+      border: 1px solid var(--line); border-radius: 10px; overflow: hidden;
+      margin: 14px 0; background: var(--panel-2);
+    }
+    .screen-bar {
+      display: flex; align-items: center; gap: 6px;
+      padding: 8px 12px; background: #100f0e; border-bottom: 1px solid var(--line);
+    }
+    .dot { width: 11px; height: 11px; border-radius: 50%; background: var(--line); }
+    .screen-url {
+      margin-left: 10px; font-size: 12px; color: var(--muted);
+      background: var(--panel); padding: 3px 10px; border-radius: 999px;
+    }
+    .screen-body { padding: 20px; }
+    .mock-btn {
+      display: inline-block; padding: 10px 18px; border-radius: 8px;
+      background: var(--accent); color: #fff; font-weight: 800; margin: 6px 6px 6px 0;
+    }
+    .mock-btn.ghost { background: rgba(255,255,255,.06); color: var(--text); border: 1px solid var(--line); }
+    .mock-tab {
+      display: inline-block; padding: 8px 16px; border-radius: 6px 6px 0 0;
+      background: var(--panel); border: 1px solid var(--line); border-bottom: none;
+      color: var(--muted); font-weight: 700; margin-right: 4px;
+    }
+    .mock-tab.on { background: var(--accent); color: #fff; border-color: var(--accent); }
+    .highlight { color: var(--accent-2); font-weight: 800; }
+    .callout {
+      border-left: 3px solid var(--accent-2); padding: 10px 16px;
+      background: rgba(240,179,90,.08); border-radius: 0 8px 8px 0;
+      color: #f5d1a3; margin: 12px 0;
+    }
+    pre.code {
+      background: #0c0b0a; border: 1px solid var(--line); border-radius: 8px;
+      padding: 16px; overflow-x: auto; color: #e6dcd3; font-size: 13px; line-height: 1.6;
+      font-family: ui-monospace, "Cascadia Code", Consolas, monospace;
+    }
+    .code .k { color: var(--accent-2); }
+    .code .s { color: #7fd18f; }
+    .copy-line { display: flex; gap: 10px; align-items: center; margin-top: 8px; }
+    .copy-btn {
+      min-height: 34px; padding: 0 14px; border-radius: 6px;
+      background: var(--panel); border: 1px solid var(--line); color: var(--text);
+      font-weight: 700; cursor: pointer;
+    }
+    .arrow { color: var(--accent-2); font-weight: 900; }
+    @media (max-width: 620px) {
+      .step { grid-template-columns: 44px 1fr; gap: 14px; }
+      .step-num { width: 44px; height: 44px; font-size: 20px; }
+    }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="index.html" aria-label="LustyVixens home">
+      <img class="brand-logo" src="assets/lusty-vixens-logo.png" alt="LustyVixens">
+    </a>
+    <nav class="nav" aria-label="Main navigation">
+      <a href="gallery.html">Watch</a>
+      <a href="creator.html">Creator Upload</a>
+      <a href="admin.html">Admin</a>
+      <a href="analytics.html">Analytics</a>
+      <a href="legal/dmca.html">DMCA</a>
+    </nav>
+  </header>
+
+  <main class="tut">
+    <div class="page-head">
+      <p class="eyebrow">Step-by-step guide</p>
+      <h1>How to add a video</h1>
+      <p class="lead">Upload once to Doodstream, copy one link, and it plays on your site. Follow the 6 steps below.</p>
+    </div>
+
+    <!-- STEP 1 -->
+    <div class="step">
+      <div class="step-num">1</div>
+      <div class="step-body">
+        <h2>Open Doodstream and log in</h2>
+        <p>Go to Doodstream and sign in (or create a free account).</p>
+        <div class="screen">
+          <div class="screen-bar"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="screen-url">doodstream.com</span></div>
+          <div class="screen-body">
+            <span class="mock-btn ghost">Log in</span>
+            <span class="mock-btn">Sign up</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- STEP 2 -->
+    <div class="step">
+      <div class="step-num">2</div>
+      <div class="step-body">
+        <h2>Click Upload</h2>
+        <p>Top menu <span class="arrow">→</span> <span class="highlight">Upload</span>. Choose one:</p>
+        <p><strong>Upload Video</strong> = pick a file from your PC.<br><strong>Remote Upload</strong> = paste a video URL, Doodstream grabs it.</p>
+        <div class="screen">
+          <div class="screen-bar"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="screen-url">doodstream.com/upload</span></div>
+          <div class="screen-body">
+            <span class="mock-btn">⬆ Upload Video</span>
+            <span class="mock-btn ghost">🔗 Remote Upload</span>
+          </div>
+        </div>
+        <div class="callout">Wait until the video shows <strong>Ready</strong> / <strong>Processed</strong>. Big files take a few minutes.</div>
+      </div>
+    </div>
+
+    <!-- STEP 3 -->
+    <div class="step">
+      <div class="step-num">3</div>
+      <div class="step-body">
+        <h2>Open the video, find Embed</h2>
+        <p>Click your uploaded video. Look for the <span class="highlight">Embed</span> tab (or Share button).</p>
+        <div class="screen">
+          <div class="screen-bar"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="screen-url">doodstream.com/d/yourvideo</span></div>
+          <div class="screen-body">
+            <span class="mock-tab">Video link</span><span class="mock-tab on">Embed</span>
+            <div style="border:1px solid var(--line); border-radius:0 8px 8px 8px; padding:14px; margin-top:0;">
+              <p style="margin:0 0 8px; color:var(--muted); font-size:13px;">Copy this URL:</p>
+              <code style="color:var(--accent-2);">https://dood.to/e/abc123xyz</code>
+            </div>
+          </div>
+        </div>
+        <div class="callout">⚠️ Must be the <strong>/e/</strong> link (the embed one). NOT the normal watch page. <code>/e/</code> = plays inside your site.</div>
+      </div>
+    </div>
+
+    <!-- STEP 4 -->
+    <div class="step">
+      <div class="step-num">4</div>
+      <div class="step-body">
+        <h2>Copy title, category, embed link</h2>
+        <p>You now have 3 things to add:</p>
+        <p>
+          <strong>Title</strong> — what shows on the card<br>
+          <strong>Category</strong> — amateur / solo / couples / asian / featured<br>
+          <strong>Embed link</strong> — the <code>/e/</code> URL from step 3
+        </p>
+      </div>
+    </div>
+
+    <!-- STEP 5 -->
+    <div class="step">
+      <div class="step-num">5</div>
+      <div class="step-body">
+        <h2>Add it to videos.json</h2>
+        <p>Easiest: <span class="highlight">paste the 3 things to Claude</span> and it adds + publishes for you.</p>
+        <p>Manual way — edit on GitHub: open <code>videos.json</code> <span class="arrow">→</span> pencil ✏️ <span class="arrow">→</span> add this block inside the list:</p>
+        <pre class="code" id="json-block"><span class="k">{</span>
+  <span class="k">"id"</span>: <span class="s">"v3"</span>,
+  <span class="k">"title"</span>: <span class="s">"My Video Title"</span>,
+  <span class="k">"category"</span>: <span class="s">"amateur"</span>,
+  <span class="k">"creator"</span>: <span class="s">"Creator Name"</span>,
+  <span class="k">"thumb"</span>: <span class="s">""</span>,
+  <span class="k">"embed"</span>: <span class="s">"https://dood.to/e/abc123xyz"</span>,
+  <span class="k">"added"</span>: <span class="s">"2026-07-22"</span>
+<span class="k">}</span></pre>
+        <div class="copy-line">
+          <button class="copy-btn" id="copy-json">Copy this block</button>
+          <span id="copy-status" style="color:var(--ok); font-size:13px;"></span>
+        </div>
+        <div class="callout">Put a comma <strong>,</strong> between blocks. No comma after the last one. One bad comma breaks the gallery.</div>
+      </div>
+    </div>
+
+    <!-- STEP 6 -->
+    <div class="step">
+      <div class="step-num">6</div>
+      <div class="step-body">
+        <h2>Publish — it goes live</h2>
+        <p>Save / Commit on GitHub. GitHub rebuilds in ~2 minutes.</p>
+        <p>Open the <a href="gallery.html" style="color:var(--accent-2); font-weight:800;">Watch</a> page <span class="arrow">→</span> your video shows as a card <span class="arrow">→</span> click <span class="arrow">→</span> plays in a popup.</p>
+        <div class="screen">
+          <div class="screen-bar"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="screen-url">guarana112.github.io/lustyvixens/gallery.html</span></div>
+          <div class="screen-body">
+            <div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:10px;">
+              <div style="aspect-ratio:16/9; background:linear-gradient(135deg,rgba(201,22,70,.35),rgba(240,179,90,.2)); border-radius:8px; display:flex; align-items:center; justify-content:center; color:#fff; font-size:24px;">▶</div>
+              <div style="aspect-ratio:16/9; background:linear-gradient(135deg,rgba(201,22,70,.35),rgba(240,179,90,.2)); border-radius:8px; display:flex; align-items:center; justify-content:center; color:#fff; font-size:24px;">▶</div>
+              <div style="aspect-ratio:16/9; background:linear-gradient(135deg,rgba(201,22,70,.35),rgba(240,179,90,.2)); border-radius:8px; display:flex; align-items:center; justify-content:center; color:#fff; font-size:24px;">▶</div>
+            </div>
+          </div>
+        </div>
+        <div class="callout">Done. Repeat steps 1–6 for every new video. Faster each time.</div>
+      </div>
+    </div>
+
+  </main>
+
+  <footer class="footer">
+    <span>© 2026 LustyVixens. 18+ only.</span>
+    <span><a href="legal/terms.html">Terms</a> · <a href="legal/privacy.html">Privacy</a> · <a href="legal/dmca.html">DMCA</a></span>
+  </footer>
+
+  <script>
+    document.querySelector("#copy-json")?.addEventListener("click", () => {
+      const block = `{
+  "id": "v3",
+  "title": "My Video Title",
+  "category": "amateur",
+  "creator": "Creator Name",
+  "thumb": "",
+  "embed": "https://dood.to/e/abc123xyz",
+  "added": "2026-07-22"
+}`;
+      navigator.clipboard.writeText(block).then(() => {
+        const s = document.querySelector("#copy-status");
+        s.textContent = "✅ Copied";
+        setTimeout(() => { s.textContent = ""; }, 2000);
+      });
+    });
+  </script>
+</body>
+</html>
