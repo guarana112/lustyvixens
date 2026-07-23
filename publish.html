@@ -51,7 +51,7 @@
 
   <header class="topbar" style="display:none;">
     <a class="brand" href="index.html"><img class="brand-logo" src="assets/lusty-vixens-logo.png" alt="LustyVixens"></a>
-    <nav class="nav"><a href="index.html">Home</a><a href="publish.html">Add Video</a><a href="admin.html">Admin</a><a href="tutorial.html">Guide</a><a href="legal/dmca.html">DMCA</a></nav>
+    <nav class="nav"><a href="index.html">Home</a><a href="publish.html">Add Video</a><a href="tutorial.html">Guide</a><a href="legal/dmca.html">DMCA</a></nav>
   </header>
 
   <main class="wrap" style="display:none;">
@@ -89,12 +89,13 @@
 
     <!-- ADD VIDEO -->
     <div class="card" id="add-card">
-      <h2>Publish a video</h2>
-      <p class="sub">Paste the Doodstream link — I auto-convert it to the embed format.</p>
+      <h2>Add a video</h2>
+      <p class="sub"><b>Step 1:</b> upload to Doodstream. <b>Step 2:</b> paste the link below. Goes live on lustyvixens.com automatically.</p>
+      <a class="button primary" href="https://doodstream.com/upload" target="_blank" rel="noopener" style="display:inline-flex;margin-bottom:18px;text-decoration:none;">⬆ Open Doodstream to upload</a>
       <div class="row">
         <label for="f-link">Doodstream link *</label>
         <input type="text" id="f-link" placeholder="https://dood.to/d/xxxx  or  /e/xxxx">
-        <span class="hint">Watch link or embed link — both work.</span>
+        <span class="hint">Watch link or embed link — both work. I auto-convert it.</span>
       </div>
       <div class="row">
         <label for="f-title">Title *</label>
@@ -119,7 +120,8 @@
       </div>
       <div class="row">
         <label for="f-thumb">Thumbnail image URL (optional)</label>
-        <input type="text" id="f-thumb" placeholder="https://...jpg — leave blank for placeholder">
+        <input type="text" id="f-thumb" placeholder="https://...jpg — leave blank for a title card">
+        <span class="hint">In Doodstream → open the video → copy the Splash/Thumbnail image URL. Blank = auto title card.</span>
       </div>
       <button class="primary big-submit" id="publish-btn">🚀 Publish to site</button>
       <div class="status" id="status"></div>
