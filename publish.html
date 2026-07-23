@@ -87,9 +87,49 @@
       </div>
     </div>
 
-    <!-- ADD VIDEO -->
+    <!-- 1-CLICK FILE UPLOAD (via backend) -->
+    <div class="card" id="upload-card">
+      <h2>⚡ 1-click upload (from your PC)</h2>
+      <p class="sub">Pick a video → it uploads to Doodstream and publishes itself. Needs the upload backend connected.</p>
+      <div class="token-state">
+        <span>Backend:</span>
+        <span class="pill off" id="backend-pill">not connected</span>
+        <button class="link-btn" id="edit-backend" style="display:none;">change</button>
+      </div>
+      <div id="backend-form">
+        <div class="setup-note" style="margin-bottom:10px;">Deploy the <code>upload-backend</code> folder to Render (see its README), then paste its URL + the same admin secret here.</div>
+        <div class="row"><input type="text" id="backend-url" placeholder="https://your-app.onrender.com"></div>
+        <div class="row"><input type="password" id="backend-secret" placeholder="Admin secret (matches Render ADMIN_SECRET)" autocomplete="off"></div>
+        <button class="primary" id="save-backend">Save backend</button>
+      </div>
+      <div id="upload-form" style="margin-top:6px;">
+        <div class="row">
+          <label for="u-file">Video file *</label>
+          <input type="file" id="u-file" accept="video/*">
+        </div>
+        <div class="row">
+          <label for="u-title">Title (optional)</label>
+          <input type="text" id="u-title" placeholder="Blank = use the file name">
+        </div>
+        <div class="row">
+          <label for="u-cat">Category *</label>
+          <select id="u-cat">
+            <option value="lesbian">Lesbian + Amateur</option>
+            <option value="milf">MILF + Amateur</option>
+            <option value="asian">Asian + Amateur</option>
+            <option value="latina">Latina + Amateur</option>
+            <option value="anal">Anal + Couples</option>
+            <option value="cosplay">Cosplay + Gaming</option>
+          </select>
+        </div>
+        <button class="primary big-submit" id="u-btn">⚡ Upload &amp; Publish</button>
+        <div class="status" id="u-status"></div>
+      </div>
+    </div>
+
+    <!-- ADD VIDEO (paste link) -->
     <div class="card" id="add-card">
-      <h2>Add a video</h2>
+      <h2>Or paste a link</h2>
       <p class="sub"><b>Step 1:</b> upload to Doodstream. <b>Step 2:</b> paste the link below. Goes live on lustyvixens.com automatically.</p>
       <a class="button primary" href="https://doodstream.com/upload" target="_blank" rel="noopener" style="display:inline-flex;margin-bottom:18px;text-decoration:none;">⬆ Open Doodstream to upload</a>
       <div class="row">
@@ -297,9 +337,69 @@
       }
     }
 
+    // ---- backend (1-click file upload) ----
+    const BACKEND_URL_KEY = "lv_backend_url";
+    const BACKEND_SECRET_KEY = "lv_backend_secret";
+
+    function refreshBackendUI() {
+      const has = !!localStorage.getItem(BACKEND_URL_KEY) && !!localStorage.getItem(BACKEND_SECRET_KEY);
+      $("backend-pill").textContent = has ? "connected" : "not connected";
+      $("backend-pill").className = "pill " + (has ? "on" : "off");
+      $("backend-form").style.display = has ? "none" : "block";
+      $("edit-backend").style.display = has ? "inline" : "none";
+    }
+
+    function setUStatus(msg, kind) {
+      const s = $("u-status");
+      s.className = "status show " + kind;
+      s.innerHTML = msg;
+    }
+
+    async function uploadFileFlow() {
+      const backend = (localStorage.getItem(BACKEND_URL_KEY) || "").replace(/\/$/, "");
+      const secret = localStorage.getItem(BACKEND_SECRET_KEY) || "";
+      const file = $("u-file").files[0];
+      const title = $("u-title").value.trim();
+      const cat = $("u-cat").value;
+
+      if (!backend || !secret) { setUStatus("Connect the backend first (fields above).", "err"); return; }
+      if (!getToken()) { setUStatus("Connect your GitHub token first (top box).", "err"); return; }
+      if (!file) { setUStatus("Pick a video file.", "err"); return; }
+
+      $("u-btn").disabled = true;
+      setUStatus("⏳ Uploading to Doodstream… large files take a while, and a sleeping free server can take ~30-60s to wake. Keep this tab open.", "work");
+      try {
+        const fd = new FormData();
+        fd.append("file", file);
+        const r = await fetch(backend + "/upload", { method: "POST", headers: { "X-Admin-Secret": secret }, body: fd });
+        const d = await r.json().catch(() => ({}));
+        if (!r.ok || !d.embed) throw new Error(d.error || ("Upload failed (" + r.status + ")"));
+
+        // publish to videos.json via GitHub
+        const { json, sha } = await ghGet();
+        if (!Array.isArray(json.videos)) json.videos = [];
+        json.videos.unshift({
+          id: "v" + Date.now().toString(36),
+          title: title || d.title || "New Drop",
+          category: cat, creator: "", thumb: "", embed: d.embed,
+          added: new Date().toISOString().slice(0, 10)
+        });
+        await ghPut(json, sha, "Add video (file upload): " + (title || d.title || d.filecode));
+
+        setUStatus("✅ Uploaded + published! Live on lustyvixens.com in ~2 min.<br><a href='/' style='color:#8ee0ac;font-weight:800;'>Open site →</a>", "ok");
+        $("u-file").value = ""; $("u-title").value = "";
+        loadList();
+      } catch (e) {
+        setUStatus("❌ " + escapeHtml(e.message), "err");
+      } finally {
+        $("u-btn").disabled = false;
+      }
+    }
+
     // ---- init ----
     function initPublisher() {
       refreshTokenUI();
+      refreshBackendUI();
       loadList();
       $("save-token").addEventListener("click", () => {
         const t = $("token-input").value.trim();
@@ -313,6 +413,18 @@
       });
       $("edit-token").addEventListener("click", () => { $("token-form").style.display = "block"; });
       $("publish-btn").addEventListener("click", publishVideo);
+
+      $("save-backend").addEventListener("click", () => {
+        const url = $("backend-url").value.trim();
+        const secret = $("backend-secret").value.trim();
+        if (!url || !secret) { alert("Enter both the backend URL and the admin secret."); return; }
+        localStorage.setItem(BACKEND_URL_KEY, url);
+        localStorage.setItem(BACKEND_SECRET_KEY, secret);
+        $("backend-secret").value = "";
+        refreshBackendUI();
+      });
+      $("edit-backend").addEventListener("click", () => { $("backend-form").style.display = "block"; });
+      $("u-btn").addEventListener("click", uploadFileFlow);
     }
   </script>
 </body>
