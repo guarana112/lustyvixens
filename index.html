@@ -1,99 +1,407 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="robots" content="index,follow">
-  <title>LustyVixens Creator Platform</title>
-  <link rel="stylesheet" href="assets/styles.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#0c0d12">
+<title>LustyVixens — Daily Drops</title>
+
+<!-- SEO -->
+<meta name="description" content="LustyVixens — daily amateur clips: lesbian, MILF, Asian, Latina, anal, cosplay. New drops every day. 18+ only.">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://lustyvixens.com/">
+<meta name="rating" content="adult">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+
+<!-- Open Graph -->
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="LustyVixens">
+<meta property="og:title" content="LustyVixens — Daily Drops">
+<meta property="og:description" content="New amateur clips every day. 18+ only.">
+<meta property="og:url" content="https://lustyvixens.com/">
+<meta property="og:image" content="https://lustyvixens.com/favicon.svg">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="LustyVixens — Daily Drops">
+
+<style>
+  :root{--bg:#0c0d12;--card:#171922;--card2:#1d2230;--line:#262a38;--text:#eef0f5;--mut:#8b94a8;--acc:#ff3e6d;--acc2:#4dd0e1;--gold:#ffb020}
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{background:var(--bg);color:var(--text);font:15px/1.5 -apple-system,Segoe UI,Roboto,sans-serif;min-height:100vh}
+  a{color:inherit;text-decoration:none}
+
+  /* AGE GATE */
+  #agegate{position:fixed;inset:0;z-index:999;background:#07080c;display:none;align-items:center;justify-content:center;padding:20px;overflow:auto}
+  #agegate.show{display:flex}
+  #agegate .box{max-width:520px;width:100%;text-align:center;background:var(--card);border:1px solid var(--line);border-radius:16px;padding:32px 26px}
+  #agegate .logo{font-size:30px;font-weight:800;color:var(--acc)}
+  #agegate .logo span{color:var(--text)}
+  #agegate h2{font-size:26px;margin:14px 0 6px}
+  #agegate .warn{color:var(--acc);font-weight:700;font-size:13px;margin:6px 0}
+  #agegate p{color:var(--mut);font-size:13px;line-height:1.6;margin:10px 0}
+  #agegate .row{display:flex;gap:12px;margin:18px 0}
+  #agegate .row button{flex:1;padding:14px;border:0;border-radius:10px;font-weight:800;font-size:16px;cursor:pointer}
+  #enter{background:#3ddc84;color:#07210f}
+  #leave{background:#2a2f3d;color:var(--mut)}
+  .gate-ads{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-top:14px}
+  .gate-ads a{background:linear-gradient(135deg,#2a1320,var(--card2));border:1px solid var(--acc);border-radius:10px;padding:12px 6px;font-size:12px;font-weight:700;color:var(--acc)}
+  .gate-ads a:hover{background:var(--acc);color:#fff}
+  @media(max-width:480px){.gate-ads{grid-template-columns:1fr}}
+
+  header{position:sticky;top:0;z-index:10;background:rgba(12,13,18,.96);backdrop-filter:blur(8px);border-bottom:1px solid var(--line);padding:12px 18px}
+  .hrow{display:flex;gap:14px;align-items:center;flex-wrap:wrap}
+  .logo{font-size:22px;font-weight:800;color:var(--acc);letter-spacing:-.5px}
+  .logo span{color:var(--text)}
+  nav.main{display:flex;gap:4px;flex-wrap:wrap}
+  nav.main a{padding:7px 14px;border-radius:8px;font-weight:600;font-size:14px;color:var(--mut);cursor:pointer}
+  nav.main a:hover{color:var(--text)}
+  nav.main a.on{color:#fff;background:var(--acc)}
+  #search{flex:1;min-width:150px;background:var(--card) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%238b94a8' stroke-width='2' stroke-linecap='round'%3E%3Ccircle cx='11' cy='11' r='7'/%3E%3Cline x1='21' y1='21' x2='16.65' y2='16.65'/%3E%3C/svg%3E") no-repeat 14px center;border:1px solid var(--line);border-radius:24px;padding:9px 16px 9px 40px;color:var(--text);font-size:14px}
+  #search:focus{outline:1px solid var(--acc)}
+  .socials{margin-left:auto}
+  .socials a{color:var(--mut);margin-left:10px;font-size:13px}
+  .socials a:hover{color:var(--acc2)}
+
+  .toolbar{display:flex;gap:10px;align-items:center;flex-wrap:wrap;padding:14px 20px;border-bottom:1px solid var(--line)}
+  .chips{display:flex;gap:8px;flex-wrap:wrap}
+  .chip{background:var(--card);border:1px solid var(--line);color:var(--mut);padding:6px 14px;border-radius:20px;cursor:pointer;font-size:13px;user-select:none}
+  .chip.active{background:var(--acc);color:#fff;border-color:var(--acc)}
+  select.sort{margin-left:auto;background:var(--card);border:1px solid var(--line);color:var(--text);padding:8px 12px;border-radius:8px;font-size:13px;cursor:pointer}
+
+  .promo{margin:16px 20px;border:1px solid var(--line);border-radius:12px;padding:16px;text-align:center;font-size:15px;background:linear-gradient(135deg,#2a1320,var(--card))}
+  .promo a{color:var(--acc);font-weight:700}
+
+  .email{margin:16px 20px;background:linear-gradient(135deg,#23132b,#171922);border:1px solid var(--line);border-radius:12px;padding:16px;display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+  .email b{color:var(--acc)}
+  .email input{flex:1;min-width:160px;background:#0c0d12;border:1px solid var(--line);border-radius:8px;padding:10px;color:var(--text)}
+  .email button{background:var(--acc);color:#fff;border:0;border-radius:8px;padding:10px 18px;font-weight:700;cursor:pointer}
+
+  h2.section{padding:18px 20px 4px;font-size:17px}
+  .sub{padding:0 20px;color:var(--mut);font-size:13px}
+
+  /* category tiles */
+  .cats{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px;padding:14px 20px}
+  .cat{position:relative;border-radius:12px;overflow:hidden;border:1px solid var(--line);cursor:pointer;background:var(--card2);aspect-ratio:16/9;display:flex;align-items:flex-end;padding:14px;font-weight:800;font-size:16px}
+  .cat:hover{border-color:var(--acc)}
+  .cat span{position:relative;z-index:1}
+  .cat::before{content:"";position:absolute;inset:0;background:linear-gradient(135deg,rgba(255,62,109,.25),rgba(77,208,225,.12))}
+  .cat small{position:absolute;top:10px;right:12px;z-index:1;color:var(--mut);font-weight:600;font-size:11px}
+
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:14px;padding:14px 20px}
+  .vid{background:var(--card);border:1px solid var(--line);border-radius:10px;overflow:hidden;color:var(--text);transition:transform .12s,border-color .12s;position:relative}
+  .vid:hover{transform:translateY(-3px);border-color:var(--acc)}
+  .thumb{position:relative;aspect-ratio:16/9;background:#000;overflow:hidden;display:block}
+  .thumb img{width:100%;height:100%;object-fit:cover;display:block}
+  .dur{position:absolute;bottom:6px;right:6px;background:rgba(0,0,0,.8);font-size:11px;padding:2px 6px;border-radius:4px}
+  .play{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:38px;opacity:0;transition:.12s}
+  .vid:hover .play{opacity:1}
+  .save{position:absolute;top:6px;left:6px;z-index:2;background:rgba(0,0,0,.6);border:0;color:#fff;width:30px;height:30px;border-radius:50%;cursor:pointer;font-size:15px}
+  .save.on{background:var(--acc)}
+  .meta{padding:10px}
+  .title{font-size:14px;font-weight:600;line-height:1.3;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+  .stat{margin-top:6px;color:var(--mut);font-size:11px;display:flex;gap:10px}
+  .stat .r{color:var(--gold)}
+  .servers{margin-top:8px;display:flex;gap:6px;flex-wrap:wrap}
+  .servers .srv{font-size:11px;background:var(--card2);border:1px solid var(--line);color:var(--acc2);padding:3px 9px;border-radius:6px;font-weight:600}
+  .servers .srv:hover{background:var(--acc);color:#fff;border-color:var(--acc)}
+  .price{color:var(--gold);font-weight:800;font-size:16px;margin-top:6px}
+  .buy{display:block;text-align:center;background:var(--acc);color:#fff;padding:8px;border-radius:8px;margin-top:8px;font-weight:700}
+  .buy:hover{filter:brightness(1.1)}
+  .empty{text-align:center;color:var(--mut);padding:50px;grid-column:1/-1}
+
+  footer{border-top:1px solid var(--line);margin-top:30px;padding:28px 20px;color:var(--mut);font-size:13px;line-height:1.7}
+  footer .fcols{display:flex;gap:40px;flex-wrap:wrap;max-width:900px}
+  footer h4{color:var(--text);font-size:13px;margin-bottom:8px}
+  footer a{color:var(--mut);display:block;margin:3px 0}
+  footer a:hover{color:var(--acc2)}
+  footer .legal{margin-top:22px;border-top:1px solid var(--line);padding-top:16px;font-size:12px;color:#5d6679;max-width:900px}
+  .badge18{display:inline-block;border:1px solid var(--acc);color:var(--acc);border-radius:6px;padding:1px 7px;font-weight:700;font-size:11px}
+  .hide{display:none}
+</style>
 </head>
 <body>
-  <header class="topbar">
-    <a class="brand" href="index.html" aria-label="LustyVixens home">
-      <img class="brand-logo" src="assets/lusty-vixens-logo.png" alt="LustyVixens">
-    </a>
-    <nav class="nav" aria-label="Main navigation">
-      <a href="gallery.html">Watch</a>
-      <a href="creator.html">Creator Upload</a>
-      <a href="admin.html">Admin</a>
-      <a href="analytics.html">Analytics</a>
-      <a href="legal/dmca.html">DMCA</a>
+
+<!-- ================= AGE GATE (with 3 affiliate spots) ================= -->
+<div id="agegate">
+  <div class="box">
+    <div class="logo">Lusty<span>Vixens</span></div>
+    <h2>Are you 18 or older?</h2>
+    <div class="warn">⚠ WARNING: ADULT CONTENT</div>
+    <p>This website contains age-restricted material including nudity and explicit sexual content. By entering you confirm you are at least <b>18 years old</b> (or the age of majority in your jurisdiction) and consent to viewing adult content.</p>
+    <div class="row">
+      <button id="enter">YES — Enter</button>
+      <button id="leave">NO — Leave</button>
+    </div>
+    <div class="gate-ads">
+      <a href="https://chaturbate.com/in/?tour=LQps&campaign=YNDth&track=default&room=lustyvixens" rel="noopener" target="_blank">🔴 LIVE Cams</a>
+      <a href="#" rel="noopener" target="_blank">💋 Meet &amp; Fuck</a>
+      <a href="#" rel="noopener" target="_blank">🔥 Hookups Near You</a>
+    </div>
+  </div>
+</div>
+
+<!-- ================= HEADER ================= -->
+<header>
+  <div class="hrow">
+    <a class="logo" href="#home" onclick="go('home')">Lusty<span>Vixens</span></a>
+    <nav class="main" id="nav">
+      <a data-v="home" class="on" onclick="go('home')">Home</a>
+      <a data-v="videos" onclick="go('videos')">Videos</a>
+      <a data-v="models" onclick="go('models')">Models</a>
+      <a data-v="categories" onclick="go('categories')">Categories</a>
+      <a data-v="saved" onclick="go('saved')">♡ Watch Later</a>
+      <a data-v="shop" onclick="go('shop')" style="color:var(--gold)">🛒 Shop</a>
+      <a href="publish.html" style="color:var(--acc2)">➕ Add Video</a>
     </nav>
-  </header>
+    <input id="search" placeholder="Search..." aria-label="Search">
+    <div class="socials">
+      <a href="https://x.com/serenababe01" target="_blank" rel="noopener">Twitter</a>
+      <a href="https://www.instagram.com/serenababe_001/" target="_blank" rel="noopener">Instagram</a>
+      <a href="https://www.tiktok.com/@serenababe01" target="_blank" rel="noopener">TikTok</a>
+    </div>
+  </div>
+</header>
 
-  <main>
-    <section class="hero">
-      <div class="hero-copy">
-        <img class="hero-logo" src="assets/lusty-vixens-logo.png" alt="LustyVixens">
-        <p class="eyebrow">Free launch stack</p>
-        <h1>Creator intake, catalog control, legal pages, and backup planning in one lightweight site.</h1>
-        <p class="lead">Built for licensed creator submissions only: paste a creator-owned video link or upload a file from a computer, then track the submission in the admin queue.</p>
-        <div class="actions">
-          <a class="button primary" href="gallery.html">Watch Now</a>
-          <a class="button secondary" href="creator.html">Open Creator Form</a>
-        </div>
-      </div>
-      <div class="status-panel" aria-label="Launch status">
-        <div>
-          <span class="metric">7</span>
-          <span class="label">Free modules ready</span>
-        </div>
-        <div>
-          <span class="metric">$0</span>
-          <span class="label">Required hosting cost</span>
-        </div>
-        <div>
-          <span class="metric">2</span>
-          <span class="label">Creator upload options</span>
-        </div>
-      </div>
-    </section>
+<!-- top promo -->
+<div class="promo">
+  <a href="https://chaturbate.com/in/?tour=LQps&campaign=YNDth&track=default&room=lustyvixens" rel="noopener" target="_blank">💋 Meet hot girls on LIVE cam — Watch free →</a>
+</div>
 
-    <section class="section">
-      <div class="section-title">
-        <p class="eyebrow">What is included</p>
-        <h2>Free features you can ship now</h2>
-      </div>
-      <div class="feature-grid">
-        <article class="feature-card">
-          <h3>Creator Submission Form</h3>
-          <p>Two source options: paste a legal video link or upload an already downloaded file from PC.</p>
-        </article>
-        <article class="feature-card">
-          <h3>Admin Catalog</h3>
-          <p>Review incoming titles, status, creator info, categories, and notes before publishing.</p>
-        </article>
-        <article class="feature-card">
-          <h3>Legal Docs</h3>
-          <p>Starter Terms, Privacy, and DMCA pages with clear rights and takedown language.</p>
-        </article>
-        <article class="feature-card">
-          <h3>Email Templates</h3>
-          <p>Creator approval, upload received, subscriber welcome, and release alert templates.</p>
-        </article>
-        <article class="feature-card">
-          <h3>Analytics Plan</h3>
-          <p>GA4-ready event naming for traffic, creator submissions, clicks, and conversions.</p>
-        </article>
-        <article class="feature-card">
-          <h3>Domain Portability</h3>
-          <p>Checklist for moving to a new domain while keeping data, catalog exports, and creator contacts.</p>
-        </article>
-      </div>
-    </section>
+<!-- ================= HOME ================= -->
+<section id="view-home">
+  <h2 class="section">Browse Categories</h2>
+  <div class="cats" id="homeCats"></div>
+  <h2 class="section">Newest Drops</h2>
+  <div class="grid" id="homeNew"></div>
+</section>
 
-    <section class="section split">
-      <div>
-        <p class="eyebrow">Compliance first</p>
-        <h2>Built around licensed content, not takedown avoidance.</h2>
-      </div>
-      <p>The free version gives you the front-end and workflow foundation. When you connect Supabase, Formspree, Voe, SendGrid, or Cloudflare later, the same fields and event names can become the production backend.</p>
-    </section>
-  </main>
+<!-- ================= VIDEOS ================= -->
+<section id="view-videos" class="hide">
+  <div class="toolbar">
+    <div class="chips" id="catChips"></div>
+    <select class="sort" id="sort">
+      <option value="recent">Most Recent</option>
+      <option value="views">Most Viewed</option>
+      <option value="rating">Best Rated</option>
+    </select>
+  </div>
+  <h2 class="section" id="vidTitle">All Videos</h2>
+  <div class="grid" id="grid"></div>
+</section>
 
-  <footer class="footer">
-    <span>© 2026 LustyVixens. 18+ only.</span>
-    <span><a href="legal/terms.html">Terms</a> · <a href="legal/privacy.html">Privacy</a> · <a href="legal/dmca.html">DMCA</a></span>
-  </footer>
+<!-- ================= MODELS ================= -->
+<section id="view-models" class="hide">
+  <h2 class="section">Models</h2>
+  <p class="sub">Model profiles coming soon — verified creators featured here.</p>
+  <div class="grid"><div class="empty">No model profiles yet. Check back soon.</div></div>
+</section>
+
+<!-- ================= CATEGORIES ================= -->
+<section id="view-categories" class="hide">
+  <h2 class="section">All Categories</h2>
+  <div class="cats" id="allCats"></div>
+</section>
+
+<!-- ================= SAVED ================= -->
+<section id="view-saved" class="hide">
+  <h2 class="section">♡ Watch Later</h2>
+  <p class="sub">Saved on this device.</p>
+  <div class="grid" id="savedGrid"></div>
+</section>
+
+<!-- ================= SHOP ================= -->
+<section id="view-shop" class="hide">
+  <h2 class="section">🛒 Shop</h2>
+  <p class="sub">Handpicked toys &amp; accessories · ships discreetly</p>
+  <div class="grid" id="shopGrid"></div>
+</section>
+
+<!-- bottom promo -->
+<div class="promo">
+  <a href="https://chaturbate.com/in/?tour=LQps&campaign=YNDth&track=default&room=lustyvixens" rel="noopener" target="_blank">🔞 1000s of live cams — Join free →</a>
+</div>
+
+<!-- email -->
+<form class="email" id="emailForm" action="https://formspree.io/f/mnjkjkvo" method="post">
+  <div>🔥 <b>Get new drops first</b> — early access + exclusive clips</div>
+  <input type="email" id="emailIn" name="email" placeholder="your@email.com" required autocomplete="email">
+  <button type="submit">Join</button>
+</form>
+
+<footer>
+  <div class="fcols">
+    <div><h4>LustyVixens</h4><a onclick="go('home')">Home</a><a onclick="go('videos')">Videos</a><a onclick="go('categories')">Categories</a></div>
+    <div><h4>Follow</h4>
+      <a href="https://x.com/serenababe01" target="_blank" rel="noopener">Twitter</a>
+      <a href="https://www.instagram.com/serenababe_001/" target="_blank" rel="noopener">Instagram</a>
+      <a href="https://www.tiktok.com/@serenababe01" target="_blank" rel="noopener">TikTok</a>
+    </div>
+    <div><h4>Info</h4><a href="legal/dmca.html">Content removal / DMCA</a><a href="legal/terms.html">Terms</a><a href="legal/privacy.html">Privacy</a></div>
+  </div>
+  <div class="legal">
+    <span class="badge18">18+</span> All persons depicted were at least 18 years old at time of creation.
+    All content published with permission of rights holders. Removal requests: <b>abuse@lustyvixens.com</b>.
+    © <span id="yr"></span> LustyVixens.
+  </div>
+</footer>
+
+<script>
+/* ===== CATEGORIES ===== */
+const CATEGORIES = [
+  { id:'lesbian', name:'Lesbian + Amateur' },
+  { id:'milf',    name:'MILF + Amateur' },
+  { id:'asian',   name:'Asian + Amateur' },
+  { id:'latina',  name:'Latina + Amateur' },
+  { id:'anal',    name:'Anal + Couples' },
+  { id:'cosplay', name:'Cosplay + Gaming' },
+];
+
+/* ===== SHOP PRODUCTS — edit here. link = your affiliate/supplier buy URL ===== */
+const PRODUCTS = [
+  { name:"Sample Product — replace me", img:"https://via.placeholder.com/320x180/171922/ffb020?text=Product", price:"$29.99", link:"#" },
+];
+
+/* placeholder thumbnail for videos with no image */
+const PLACEHOLDER_THUMB = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='320' height='180'%3E%3Crect width='320' height='180' fill='%23171922'/%3E%3Ctext x='50%25' y='55%25' font-size='46' fill='%23ff3e6d' text-anchor='middle' dominant-baseline='middle'%3E%E2%96%B6%3C/text%3E%3C/svg%3E";
+
+/* ===== VIDEOS — loaded live from videos.json (written by publish.html) ===== */
+let VIDEOS = [];
+
+/* convert a videos.json entry into a display card */
+function mapVideo(v){
+  const watch = (v.embed || '').replace('/e/', '/d/'); // filehost watch page
+  return {
+    title: v.title || 'Untitled',
+    thumb: v.thumb || PLACEHOLDER_THUMB,
+    dur: v.dur || '',
+    link: watch,
+    servers: [{ n:'Watch ▶', u: watch }],
+    cats: v.category ? [v.category] : [],
+    views: +v.views || 0,
+    rating: +v.rating || 0,
+    date: +String(v.added || '').replace(/-/g,'') || 0
+  };
+}
+
+/* ===== helpers ===== */
+const $ = s => document.querySelector(s);
+function esc(s){return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
+function nfmt(n){ n=+n||0; return n>=1000?(n/1000).toFixed(n>=10000?0:1)+'k':String(n); }
+function catName(id){ const c=CATEGORIES.find(x=>x.id===id); return c?c.name:id; }
+
+/* ===== watch later (localStorage, no login) ===== */
+function saved(){ try{ return JSON.parse(localStorage.getItem('lv_saved')||'[]'); }catch(e){ return []; } }
+function toggleSave(link){ let s=saved(); s.includes(link)?s=s.filter(x=>x!==link):s.push(link); localStorage.setItem('lv_saved',JSON.stringify(s)); }
+
+/* ===== card render ===== */
+function card(v){
+  const isSaved = saved().includes(v.link);
+  return `<div class="vid">
+    <button class="save ${isSaved?'on':''}" data-link="${esc(v.link)}" title="Watch later">♡</button>
+    <a class="thumb" href="${esc(v.link)}" target="_blank" rel="noopener">
+      <img src="${esc(v.thumb)}" loading="lazy" alt="${esc(v.title)}"><span class="dur">${esc(v.dur)}</span><div class="play">▶</div>
+    </a>
+    <div class="meta"><a href="${esc(v.link)}" target="_blank" rel="noopener"><div class="title">${esc(v.title)}</div></a>
+      <div class="stat"><span>▶ ${nfmt(v.views)}</span><span class="r">★ ${(+v.rating||0).toFixed(1)}</span></div>
+      <div class="servers">${(v.servers||[]).map(s=>`<a class="srv" href="${esc(s.u)}" target="_blank" rel="noopener">${esc(s.n)}</a>`).join('')}</div>
+    </div></div>`;
+}
+function renderGrid(el, list){
+  el.innerHTML = list.length ? list.map(card).join('') : `<div class="empty">No videos here yet.</div>`;
+  el.querySelectorAll('.save').forEach(b=>b.onclick=e=>{ e.preventDefault(); toggleSave(b.dataset.link); b.classList.toggle('on'); if($('#view-saved').classList.contains('show-flag')) renderSaved(); });
+}
+
+/* ===== sort/filter state ===== */
+let curCat='all', curSort='recent', q='';
+function sortList(list){
+  if(curSort==='views') return list.sort((a,b)=>b.views-a.views);
+  if(curSort==='rating') return list.sort((a,b)=>b.rating-a.rating);
+  return list.sort((a,b)=>b.date-a.date);
+}
+function videoList(){
+  let l=[...VIDEOS];
+  if(curCat!=='all') l=l.filter(v=>v.cats&&v.cats.includes(curCat));
+  if(q) l=l.filter(v=>v.title.toLowerCase().includes(q));
+  return sortList(l);
+}
+function renderVideos(){
+  $('#vidTitle').textContent = curCat==='all'?'All Videos':catName(curCat);
+  renderGrid($('#grid'), videoList());
+}
+
+/* ===== home ===== */
+function catTile(c){ return `<div class="cat" onclick="go('videos');setCat('${c.id}')"><small>${VIDEOS.filter(v=>v.cats&&v.cats.includes(c.id)).length} vids</small><span>${esc(c.name)}</span></div>`; }
+function renderHome(){
+  $('#homeCats').innerHTML = CATEGORIES.map(catTile).join('');
+  renderGrid($('#homeNew'), [...VIDEOS].sort((a,b)=>b.date-a.date).slice(0,12));
+}
+function renderCats(){ $('#allCats').innerHTML = CATEGORIES.map(catTile).join(''); }
+function renderSaved(){ const s=saved(); renderGrid($('#savedGrid'), VIDEOS.filter(v=>s.includes(v.link))); }
+function renderShop(){ $('#shopGrid').innerHTML = PRODUCTS.length ? PRODUCTS.map(p=>`
+  <div class="vid"><a class="thumb" href="${esc(p.link)}" target="_blank" rel="noopener"><img src="${esc(p.img)}" loading="lazy" alt="${esc(p.name)}"></a>
+  <div class="meta"><div class="title">${esc(p.name)}</div><div class="price">${esc(p.price)}</div>
+  <a class="buy" href="${esc(p.link)}" target="_blank" rel="noopener">Buy Now →</a></div></div>`).join('') : `<div class="empty">Shop coming soon.</div>`; }
+
+/* ===== category chips (videos view) ===== */
+function buildChips(){
+  $('#catChips').innerHTML = `<div class="chip active" data-c="all">All</div>` + CATEGORIES.map(c=>`<div class="chip" data-c="${c.id}">${esc(c.name)}</div>`).join('');
+  $('#catChips').querySelectorAll('.chip').forEach(ch=>ch.onclick=()=>setCat(ch.dataset.c));
+}
+function setCat(id){
+  curCat=id;
+  $('#catChips').querySelectorAll('.chip').forEach(ch=>ch.classList.toggle('active', ch.dataset.c===id));
+  renderVideos();
+}
+
+/* ===== nav routing ===== */
+function go(v){
+  ['home','videos','models','categories','saved','shop'].forEach(x=>{
+    $('#view-'+x).classList.toggle('hide', x!==v);
+    $('#view-'+x).classList.toggle('show-flag', x===v);
+  });
+  document.querySelectorAll('#nav a[data-v]').forEach(a=>a.classList.toggle('on', a.dataset.v===v));
+  if(v==='home') renderHome();
+  if(v==='videos') renderVideos();
+  if(v==='categories') renderCats();
+  if(v==='saved') renderSaved();
+  if(v==='shop') renderShop();
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+/* ===== age gate ===== */
+(function(){
+  function ok(){ try{return localStorage.getItem('lv_age_ok')==='1';}catch(e){return false;} }
+  function set(){ try{localStorage.setItem('lv_age_ok','1');}catch(e){} }
+  if(ok()) return;
+  const g=$('#agegate'); g.classList.add('show'); document.body.style.overflow='hidden';
+  $('#enter').onclick=()=>{ set(); g.classList.remove('show'); document.body.style.overflow=''; };
+  $('#leave').onclick=()=>{ location.href='https://www.google.com'; };
+})();
+
+/* ===== wire ===== */
+$('#search').addEventListener('input',e=>{ q=e.target.value.toLowerCase(); if(!$('#view-videos').classList.contains('hide')) renderVideos(); else { go('videos'); } });
+$('#sort').addEventListener('change',e=>{ curSort=e.target.value; renderVideos(); });
+$('#emailForm').addEventListener('submit',async function(e){
+  e.preventDefault();
+  const v=$('#emailIn').value;
+  if(!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(v)){ alert('Enter a valid email'); return; }
+  try{ const r=await fetch('https://formspree.io/f/mnjkjkvo',{method:'POST',headers:{Accept:'application/json'},body:new FormData(this)});
+    if(r.ok){ alert('Subscribed! 🔥'); this.reset(); } else alert('Try again.'); }catch(err){ alert('Network error.'); }
+});
+$('#yr').textContent=new Date().getFullYear();
+
+/* ===== load videos from videos.json, then start ===== */
+(async function init(){
+  try{
+    const r = await fetch('videos.json', { cache:'no-store' });
+    const d = await r.json();
+    VIDEOS = (Array.isArray(d.videos) ? d.videos : [])
+      .filter(v => v.embed && !v.embed.includes('REPLACE_WITH_CODE'))
+      .map(mapVideo);
+  }catch(e){ VIDEOS = []; }
+  buildChips();
+  go('home');
+})();
+</script>
 </body>
 </html>

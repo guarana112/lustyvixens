@@ -51,7 +51,7 @@
 
   <header class="topbar" style="display:none;">
     <a class="brand" href="index.html"><img class="brand-logo" src="assets/lusty-vixens-logo.png" alt="LustyVixens"></a>
-    <nav class="nav"><a href="gallery.html">Watch</a><a href="publish.html">Add Video</a><a href="admin.html">Admin</a><a href="tutorial.html">Guide</a><a href="legal/dmca.html">DMCA</a></nav>
+    <nav class="nav"><a href="index.html">Home</a><a href="publish.html">Add Video</a><a href="admin.html">Admin</a><a href="tutorial.html">Guide</a><a href="legal/dmca.html">DMCA</a></nav>
   </header>
 
   <main class="wrap" style="display:none;">
@@ -104,11 +104,12 @@
         <div class="row">
           <label for="f-cat">Category *</label>
           <select id="f-cat">
-            <option value="amateur">Amateur</option>
-            <option value="asian">Asian</option>
-            <option value="couples">Couples</option>
-            <option value="solo">Solo</option>
-            <option value="featured">Featured</option>
+            <option value="lesbian">Lesbian + Amateur</option>
+            <option value="milf">MILF + Amateur</option>
+            <option value="asian">Asian + Amateur</option>
+            <option value="latina">Latina + Amateur</option>
+            <option value="anal">Anal + Couples</option>
+            <option value="cosplay">Cosplay + Gaming</option>
           </select>
         </div>
         <div class="row">
@@ -272,7 +273,7 @@
           added: new Date().toISOString().slice(0, 10)
         });
         await ghPut(json, sha, "Add video: " + title);
-        setStatus("✅ Published! Live on your Watch page in ~2 minutes.<br><a href='gallery.html' style='color:#8ee0ac;font-weight:800;'>Open Watch page →</a>", "ok");
+        setStatus("✅ Published! Live on your site in ~2 minutes.<br><a href='/' style='color:#8ee0ac;font-weight:800;'>Open lustyvixens.com →</a>", "ok");
         $("f-link").value = ""; $("f-title").value = ""; $("f-creator").value = ""; $("f-thumb").value = "";
         loadList();
       } catch (e) {
