@@ -382,7 +382,7 @@
         json.videos.unshift({
           id: "v" + Date.now().toString(36),
           title: title || d.title || "New Drop",
-          category: cat, creator: "", thumb: "",
+          category: cat, creator: "", thumb: d.thumb || "",
           embed: d.embed,
           servers,
           added: new Date().toISOString().slice(0, 10)
