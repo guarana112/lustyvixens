@@ -1,0 +1,316 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex,nofollow">
+  <title>Add Video | LustyVixens</title>
+  <link rel="stylesheet" href="assets/styles.css">
+  <style>
+    .wrap { width: min(760px, calc(100% - 32px)); margin: 0 auto; padding: 34px 0 80px; }
+    .card { background: rgba(34,31,29,.8); border: 1px solid var(--line); border-radius: 12px; padding: 24px; margin-bottom: 20px; }
+    .card h2 { font-size: 20px; margin-bottom: 6px; }
+    .card .sub { color: var(--muted); font-size: 14px; margin-bottom: 16px; line-height: 1.5; }
+    .row { display: grid; gap: 7px; margin-bottom: 16px; }
+    .row-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+    .big-submit { width: 100%; min-height: 54px; font-size: 17px; font-weight: 900; }
+    .status { margin-top: 14px; padding: 12px 14px; border-radius: 8px; font-size: 14px; line-height: 1.5; display: none; }
+    .status.show { display: block; }
+    .status.ok { background: rgba(63,193,120,.12); border: 1px solid rgba(63,193,120,.4); color: #8ee0ac; }
+    .status.err { background: rgba(224,91,91,.12); border: 1px solid rgba(224,91,91,.4); color: #f0a3a3; }
+    .status.work { background: rgba(240,179,90,.1); border: 1px solid rgba(240,179,90,.4); color: #f5d1a3; }
+    .setup-note { font-size: 13px; color: var(--muted); line-height: 1.6; }
+    .setup-note ol { margin: 8px 0 0; padding-left: 20px; }
+    .setup-note a { color: var(--accent-2); font-weight: 700; }
+    .setup-note code { background: #0c0b0a; padding: 2px 6px; border-radius: 4px; color: var(--accent-2); }
+    .token-state { display: flex; align-items: center; gap: 10px; font-size: 14px; margin-bottom: 8px; }
+    .pill { padding: 3px 10px; border-radius: 999px; font-size: 12px; font-weight: 800; }
+    .pill.on { background: rgba(63,193,120,.16); color: #8ee0ac; }
+    .pill.off { background: rgba(224,91,91,.16); color: #f0a3a3; }
+    .link-btn { background: none; border: none; color: var(--accent-2); cursor: pointer; font-weight: 700; padding: 0; min-height: auto; text-decoration: underline; }
+    .vid-item { display: flex; align-items: center; gap: 12px; padding: 12px 0; border-bottom: 1px solid var(--line); }
+    .vid-item:last-child { border-bottom: none; }
+    .vid-item .t { flex: 1; }
+    .vid-item .t strong { display: block; }
+    .vid-item .t span { color: var(--muted); font-size: 13px; text-transform: capitalize; }
+    .del-btn { min-height: 36px; padding: 0 12px; background: rgba(224,91,91,.14); border: 1px solid rgba(224,91,91,.4); color: #f0a3a3; border-radius: 6px; cursor: pointer; font-weight: 700; }
+    .hint { font-size: 12px; color: var(--muted); margin-top: 4px; }
+    .auth-gate { position: fixed; inset: 0; background: var(--bg); display: flex; align-items: center; justify-content: center; z-index: 999; }
+    .auth-form { background: var(--panel); border: 1px solid var(--line); border-radius: 10px; padding: 32px; max-width: 340px; width: 90%; }
+  </style>
+</head>
+<body>
+  <div id="auth-gate" class="auth-gate">
+    <div class="auth-form">
+      <h2 style="margin:0 0 12px;">Add Video — Access</h2>
+      <p style="color:var(--muted); margin:0 0 16px; font-size:14px;">Enter admin password.</p>
+      <input type="password" id="auth-pass" placeholder="Password">
+      <button class="primary" style="width:100%; margin-top:14px;" onclick="checkPublishAuth()">Access</button>
+    </div>
+  </div>
+
+  <header class="topbar" style="display:none;">
+    <a class="brand" href="index.html"><img class="brand-logo" src="assets/lusty-vixens-logo.png" alt="LustyVixens"></a>
+    <nav class="nav"><a href="gallery.html">Watch</a><a href="publish.html">Add Video</a><a href="admin.html">Admin</a><a href="tutorial.html">Guide</a><a href="legal/dmca.html">DMCA</a></nav>
+  </header>
+
+  <main class="wrap" style="display:none;">
+    <div class="page-head">
+      <p class="eyebrow">Publisher</p>
+      <h1>Add a video</h1>
+      <p class="lead">Paste a Doodstream link, give it a title, hit Publish. It goes live on your Watch page in about 2 minutes.</p>
+    </div>
+
+    <!-- ONE-TIME SETUP -->
+    <div class="card" id="setup-card">
+      <h2>One-time setup: connect GitHub</h2>
+      <div class="token-state">
+        <span>Token:</span>
+        <span class="pill off" id="token-pill">not connected</span>
+        <button class="link-btn" id="edit-token" style="display:none;">change</button>
+      </div>
+      <div id="token-form">
+        <div class="setup-note">
+          This lets the page publish to your repo. The token stays <strong>only in this browser</strong> — never in your website code.
+          <ol>
+            <li>Open <a href="https://github.com/settings/personal-access-tokens/new" target="_blank" rel="noopener">GitHub → Fine-grained token</a></li>
+            <li>Token name: <code>lustyvixens-publish</code></li>
+            <li>Repository access → <strong>Only select repositories</strong> → pick <code>lustyvixens</code></li>
+            <li>Permissions → <strong>Contents</strong> → <strong>Read and write</strong></li>
+            <li>Generate → copy the token (starts <code>github_pat_</code>)</li>
+          </ol>
+        </div>
+        <div class="row" style="margin-top:14px;">
+          <input type="password" id="token-input" placeholder="Paste github_pat_... token here" autocomplete="off">
+        </div>
+        <button class="primary" id="save-token">Save token</button>
+      </div>
+    </div>
+
+    <!-- ADD VIDEO -->
+    <div class="card" id="add-card">
+      <h2>Publish a video</h2>
+      <p class="sub">Paste the Doodstream link — I auto-convert it to the embed format.</p>
+      <div class="row">
+        <label for="f-link">Doodstream link *</label>
+        <input type="text" id="f-link" placeholder="https://dood.to/d/xxxx  or  /e/xxxx">
+        <span class="hint">Watch link or embed link — both work.</span>
+      </div>
+      <div class="row">
+        <label for="f-title">Title *</label>
+        <input type="text" id="f-title" placeholder="Video title">
+      </div>
+      <div class="row-2">
+        <div class="row">
+          <label for="f-cat">Category *</label>
+          <select id="f-cat">
+            <option value="amateur">Amateur</option>
+            <option value="asian">Asian</option>
+            <option value="couples">Couples</option>
+            <option value="solo">Solo</option>
+            <option value="featured">Featured</option>
+          </select>
+        </div>
+        <div class="row">
+          <label for="f-creator">Creator (optional)</label>
+          <input type="text" id="f-creator" placeholder="Creator name">
+        </div>
+      </div>
+      <div class="row">
+        <label for="f-thumb">Thumbnail image URL (optional)</label>
+        <input type="text" id="f-thumb" placeholder="https://...jpg — leave blank for placeholder">
+      </div>
+      <button class="primary big-submit" id="publish-btn">🚀 Publish to site</button>
+      <div class="status" id="status"></div>
+    </div>
+
+    <!-- CURRENT VIDEOS -->
+    <div class="card" id="list-card">
+      <h2>Current videos <span id="count" style="color:var(--muted); font-weight:400; font-size:15px;"></span></h2>
+      <p class="sub">Live on your Watch page. Delete removes them from the site.</p>
+      <div id="vid-list"><p class="sub">Connect token to load…</p></div>
+    </div>
+  </main>
+
+  <script>
+    // ---- config ----
+    const OWNER = "guarana112";
+    const REPO = "lustyvixens";
+    const PATH = "videos.json";
+    const BRANCH = "main";
+    const TOKEN_KEY = "lv_gh_token";
+    const ADMIN_PASS = "Adaptivesync*09"; // same as admin
+
+    // ---- auth gate ----
+    function checkPublishAuth() {
+      const v = document.getElementById("auth-pass").value;
+      if (v === ADMIN_PASS) {
+        sessionStorage.setItem("publish_auth", "true");
+        showApp();
+      } else {
+        alert("Incorrect password");
+      }
+    }
+    function showApp() {
+      document.getElementById("auth-gate").style.display = "none";
+      document.querySelector("header").style.display = "flex";
+      document.querySelector("main").style.display = "block";
+      initPublisher();
+    }
+    if (sessionStorage.getItem("publish_auth")) showApp();
+    document.getElementById("auth-pass").addEventListener("keypress", e => { if (e.key === "Enter") checkPublishAuth(); });
+
+    // ---- helpers ----
+    const $ = id => document.getElementById(id);
+    function b64encode(str) { return btoa(unescape(encodeURIComponent(str))); }
+    function b64decode(str) { return decodeURIComponent(escape(atob(str.replace(/\n/g, "")))); }
+    function getToken() { return localStorage.getItem(TOKEN_KEY) || ""; }
+
+    function toEmbed(url) {
+      url = (url || "").trim();
+      if (!url) return "";
+      // already embed
+      if (url.includes("/e/")) return url;
+      // convert /d/ or /f/ to /e/
+      return url.replace(/\/(d|f)\//, "/e/");
+    }
+
+    function setStatus(msg, kind) {
+      const s = $("status");
+      s.className = "status show " + kind;
+      s.innerHTML = msg;
+    }
+
+    async function ghGet() {
+      const res = await fetch(`https://api.github.com/repos/${OWNER}/${REPO}/contents/${PATH}?ref=${BRANCH}`, {
+        headers: { "Authorization": "Bearer " + getToken(), "Accept": "application/vnd.github+json" }
+      });
+      if (!res.ok) throw new Error("GET failed (" + res.status + "). Check token has Contents access to " + REPO + ".");
+      const data = await res.json();
+      return { json: JSON.parse(b64decode(data.content)), sha: data.sha };
+    }
+
+    async function ghPut(obj, sha, message) {
+      const body = {
+        message,
+        content: b64encode(JSON.stringify(obj, null, 2) + "\n"),
+        sha,
+        branch: BRANCH
+      };
+      const res = await fetch(`https://api.github.com/repos/${OWNER}/${REPO}/contents/${PATH}`, {
+        method: "PUT",
+        headers: { "Authorization": "Bearer " + getToken(), "Accept": "application/vnd.github+json" },
+        body: JSON.stringify(body)
+      });
+      if (!res.ok) {
+        const t = await res.text();
+        throw new Error("PUT failed (" + res.status + "). " + t.slice(0, 120));
+      }
+      return res.json();
+    }
+
+    // ---- token UI ----
+    function refreshTokenUI() {
+      const has = !!getToken();
+      $("token-pill").textContent = has ? "connected" : "not connected";
+      $("token-pill").className = "pill " + (has ? "on" : "off");
+      $("token-form").style.display = has ? "none" : "block";
+      $("edit-token").style.display = has ? "inline" : "none";
+    }
+
+    // ---- render list ----
+    async function loadList() {
+      if (!getToken()) { $("vid-list").innerHTML = '<p class="sub">Connect token to load…</p>'; return; }
+      try {
+        const { json } = await ghGet();
+        const vids = (json.videos || []).filter(v => v.embed && !v.embed.includes("REPLACE_WITH_CODE"));
+        $("count").textContent = "(" + vids.length + ")";
+        if (!vids.length) { $("vid-list").innerHTML = '<p class="sub">No videos yet. Add your first above.</p>'; return; }
+        $("vid-list").innerHTML = vids.map(v => `
+          <div class="vid-item">
+            <div class="t">
+              <strong>${escapeHtml(v.title || "Untitled")}</strong>
+              <span>${escapeHtml(v.category || "")}${v.creator ? " · " + escapeHtml(v.creator) : ""}</span>
+            </div>
+            <button class="del-btn" data-id="${escapeHtml(v.id)}">Delete</button>
+          </div>`).join("");
+        $("vid-list").querySelectorAll(".del-btn").forEach(b => {
+          b.addEventListener("click", () => deleteVideo(b.dataset.id));
+        });
+      } catch (e) {
+        $("vid-list").innerHTML = '<p class="sub" style="color:#f0a3a3;">' + escapeHtml(e.message) + '</p>';
+      }
+    }
+
+    function escapeHtml(v) {
+      return String(v == null ? "" : v).replace(/[&<>"']/g, c => ({ "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;" }[c]));
+    }
+
+    // ---- publish ----
+    async function publishVideo() {
+      const link = $("f-link").value.trim();
+      const title = $("f-title").value.trim();
+      const cat = $("f-cat").value;
+      const creator = $("f-creator").value.trim();
+      const thumb = $("f-thumb").value.trim();
+
+      if (!getToken()) { setStatus("Connect your GitHub token first (setup box above).", "err"); return; }
+      if (!link) { setStatus("Paste a Doodstream link.", "err"); return; }
+      if (!title) { setStatus("Add a title.", "err"); return; }
+
+      const embed = toEmbed(link);
+      if (!embed.includes("/e/")) { setStatus("That link doesn't look like Doodstream. Expected a /d/ or /e/ URL.", "err"); return; }
+
+      $("publish-btn").disabled = true;
+      setStatus("⏳ Publishing to GitHub…", "work");
+      try {
+        const { json, sha } = await ghGet();
+        if (!Array.isArray(json.videos)) json.videos = [];
+        json.videos.unshift({
+          id: "v" + Date.now().toString(36),
+          title, category: cat, creator, thumb, embed,
+          added: new Date().toISOString().slice(0, 10)
+        });
+        await ghPut(json, sha, "Add video: " + title);
+        setStatus("✅ Published! Live on your Watch page in ~2 minutes.<br><a href='gallery.html' style='color:#8ee0ac;font-weight:800;'>Open Watch page →</a>", "ok");
+        $("f-link").value = ""; $("f-title").value = ""; $("f-creator").value = ""; $("f-thumb").value = "";
+        loadList();
+      } catch (e) {
+        setStatus("❌ " + escapeHtml(e.message), "err");
+      } finally {
+        $("publish-btn").disabled = false;
+      }
+    }
+
+    async function deleteVideo(id) {
+      if (!confirm("Delete this video from the site?")) return;
+      try {
+        const { json, sha } = await ghGet();
+        json.videos = (json.videos || []).filter(v => v.id !== id);
+        await ghPut(json, sha, "Delete video: " + id);
+        loadList();
+      } catch (e) {
+        alert("Delete failed: " + e.message);
+      }
+    }
+
+    // ---- init ----
+    function initPublisher() {
+      refreshTokenUI();
+      loadList();
+      $("save-token").addEventListener("click", () => {
+        const t = $("token-input").value.trim();
+        if (!t.startsWith("github_pat_") && !t.startsWith("ghp_")) {
+          if (!confirm("That doesn't look like a GitHub token. Save anyway?")) return;
+        }
+        localStorage.setItem(TOKEN_KEY, t);
+        $("token-input").value = "";
+        refreshTokenUI();
+        loadList();
+      });
+      $("edit-token").addEventListener("click", () => { $("token-form").style.display = "block"; });
+      $("publish-btn").addEventListener("click", publishVideo);
+    }
+  </script>
+</body>
+</html>
