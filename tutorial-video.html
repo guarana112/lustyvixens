@@ -1,0 +1,296 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex,nofollow">
+  <title>Video Tutorial | LustyVixens</title>
+  <link rel="stylesheet" href="assets/styles.css">
+  <style>
+    .stage-wrap { width: min(960px, calc(100% - 32px)); margin: 24px auto 0; }
+    .stage {
+      position: relative;
+      aspect-ratio: 16 / 9;
+      background: linear-gradient(135deg, #1a1614, #100f0e);
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      overflow: hidden;
+      box-shadow: var(--shadow);
+    }
+    .scene {
+      position: absolute; inset: 0;
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      gap: 18px; padding: 6% 8%;
+      opacity: 0; transform: translateY(18px) scale(.98);
+      transition: opacity .5s ease, transform .5s ease;
+      pointer-events: none; text-align: center;
+    }
+    .scene.on { opacity: 1; transform: none; }
+    .scene-num {
+      width: 74px; height: 74px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      background: var(--accent); color: #fff; font-size: 34px; font-weight: 900;
+      box-shadow: 0 0 0 8px rgba(201,22,70,.15);
+      animation: pop .5s ease;
+    }
+    @keyframes pop { from { transform: scale(.4); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+    .scene h2 { font-size: clamp(22px, 4vw, 40px); }
+    .scene p { color: var(--muted); font-size: clamp(14px, 2.2vw, 20px); line-height: 1.5; max-width: 640px; }
+    .scene .mock {
+      display: inline-flex; flex-wrap: wrap; gap: 8px; justify-content: center;
+      margin-top: 4px;
+    }
+    .chip {
+      padding: 8px 16px; border-radius: 8px; font-weight: 800;
+      background: rgba(255,255,255,.06); border: 1px solid var(--line); color: var(--text);
+    }
+    .chip.hot { background: var(--accent); border-color: var(--accent); color: #fff; }
+    .chip.gold { background: rgba(240,179,90,.14); border-color: var(--accent-2); color: var(--accent-2); }
+    .thumbs { display: grid; grid-template-columns: repeat(3,1fr); gap: 12px; width: min(420px, 80%); }
+    .thumbs > div {
+      aspect-ratio: 16/9; border-radius: 8px; display: flex; align-items: center; justify-content: center;
+      color: #fff; font-size: 22px;
+      background: linear-gradient(135deg, rgba(201,22,70,.4), rgba(240,179,90,.22));
+    }
+    /* intro / outro */
+    .scene.title-card h1 { font-size: clamp(30px, 6vw, 60px); line-height: 1.05; }
+    .scene .brandmark {
+      background:#fff; border-radius:8px; padding:6px 10px; display:inline-block;
+    }
+    .scene .brandmark img { width: 220px; max-width:60vw; height:auto; display:block; }
+    /* controls */
+    .controls {
+      display: flex; align-items: center; gap: 14px; flex-wrap: wrap;
+      margin-top: 16px;
+    }
+    .big-play {
+      min-height: 52px; padding: 0 28px; font-size: 17px; border-radius: 10px;
+      background: var(--accent); border: 1px solid var(--accent); color: #fff; font-weight: 900; cursor: pointer;
+    }
+    .ctrl {
+      min-height: 44px; padding: 0 16px; border-radius: 8px;
+      background: var(--panel); border: 1px solid var(--line); color: var(--text); font-weight: 700; cursor: pointer;
+    }
+    .toggle { display: inline-flex; align-items: center; gap: 8px; color: var(--muted); font-size: 14px; }
+    .progress { display: flex; gap: 6px; margin: 14px 0 0; }
+    .progress i {
+      height: 5px; flex: 1; border-radius: 999px; background: var(--line);
+      overflow: hidden; position: relative;
+    }
+    .progress i.done { background: var(--accent); }
+    .progress i.active::after {
+      content:""; position:absolute; inset:0; background: var(--accent);
+      transform-origin:left; transform: scaleX(0);
+      animation: fill var(--d, 6s) linear forwards;
+    }
+    @keyframes fill { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+    .caption-bar {
+      margin-top: 14px; min-height: 48px; padding: 12px 16px;
+      background: var(--panel); border: 1px solid var(--line); border-radius: 10px;
+      color: var(--text); font-size: 15px; line-height: 1.5; text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="index.html" aria-label="LustyVixens home">
+      <img class="brand-logo" src="assets/lusty-vixens-logo.png" alt="LustyVixens">
+    </a>
+    <nav class="nav" aria-label="Main navigation">
+      <a href="gallery.html">Watch</a>
+      <a href="tutorial.html">Guide</a>
+      <a href="creator.html">Creator Upload</a>
+      <a href="admin.html">Admin</a>
+      <a href="legal/dmca.html">DMCA</a>
+    </nav>
+  </header>
+
+  <main class="page" style="padding-top:24px;">
+    <div class="page-head" style="text-align:center;">
+      <p class="eyebrow">Narrated video</p>
+      <h1>How to add a video — watch</h1>
+      <p class="lead" style="margin-left:auto;margin-right:auto;">Press Play. It narrates and animates all 6 steps. Turn voice off to read captions only.</p>
+    </div>
+
+    <div class="stage-wrap">
+      <div class="stage" id="stage">
+        <!-- scenes injected -->
+      </div>
+
+      <div class="progress" id="progress"></div>
+
+      <div class="caption-bar" id="caption">Press Play to start.</div>
+
+      <div class="controls">
+        <button class="big-play" id="play">▶ Play</button>
+        <button class="ctrl" id="replay">↻ Replay</button>
+        <label class="toggle"><input type="checkbox" id="voice" checked style="min-height:auto;width:auto;"> Voice narration</label>
+      </div>
+    </div>
+  </main>
+
+  <footer class="footer" style="margin-top:40px;">
+    <span>© 2026 LustyVixens. 18+ only.</span>
+    <span><a href="tutorial.html">Text guide</a> · <a href="gallery.html">Watch</a></span>
+  </footer>
+
+  <script>
+    const scenes = [
+      {
+        html: `<div class="brandmark"><img src="assets/lusty-vixens-logo.png" alt="LustyVixens"></div>
+               <h1>How to add a video</h1>
+               <p>Upload once. Copy one link. It plays on your site.</p>`,
+        cls: "title-card",
+        say: "How to add a video to LustyVixens. Upload once, copy one link, and it plays on your site. Let's go.",
+        dur: 5500
+      },
+      {
+        html: `<div class="scene-num">1</div>
+               <h2>Log into Doodstream</h2>
+               <div class="mock"><span class="chip">Log in</span><span class="chip hot">Sign up</span></div>
+               <p>Open doodstream.com and sign in, or make a free account.</p>`,
+        say: "Step one. Open Doodstream dot com and log in. If you don't have an account, sign up. It's free.",
+        dur: 6000
+      },
+      {
+        html: `<div class="scene-num">2</div>
+               <h2>Click Upload</h2>
+               <div class="mock"><span class="chip hot">⬆ Upload Video</span><span class="chip">🔗 Remote Upload</span></div>
+               <p>Pick a file from your PC, or paste a URL. Wait until it says Ready.</p>`,
+        say: "Step two. Click Upload. Choose Upload Video to pick a file from your computer, or Remote Upload to paste a link. Wait until the video is ready.",
+        dur: 7500
+      },
+      {
+        html: `<div class="scene-num">3</div>
+               <h2>Copy the Embed link</h2>
+               <div class="mock"><span class="chip">Video link</span><span class="chip hot">Embed</span></div>
+               <div class="mock"><span class="chip gold">https://dood.to/e/abc123</span></div>
+               <p>Open the video, click the Embed tab, copy the link. It must have slash e slash.</p>`,
+        say: "Step three. Open your video and click the Embed tab. Copy the link. Important: it must be the slash e slash embed link, not the normal page. That's what plays inside your site.",
+        dur: 9000
+      },
+      {
+        html: `<div class="scene-num">4</div>
+               <h2>Grab 3 things</h2>
+               <div class="mock"><span class="chip gold">Title</span><span class="chip gold">Category</span><span class="chip gold">Embed link</span></div>
+               <p>A title, a category like amateur or solo, and that embed link.</p>`,
+        say: "Step four. You now need three things. A title, a category such as amateur or solo, and that embed link you just copied.",
+        dur: 7000
+      },
+      {
+        html: `<div class="scene-num">5</div>
+               <h2>Add it to your list</h2>
+               <div class="mock"><span class="chip hot">Paste to Claude</span><span class="chip">or edit videos.json</span></div>
+               <p>Easiest: paste the 3 things to Claude and it publishes for you.</p>`,
+        say: "Step five. The easy way: paste those three things to Claude, and it adds them and publishes for you. Or edit videos dot json yourself on GitHub.",
+        dur: 8000
+      },
+      {
+        html: `<div class="scene-num">6</div>
+               <h2>Publish — it's live</h2>
+               <div class="thumbs"><div>▶</div><div>▶</div><div>▶</div></div>
+               <p>In about two minutes it shows on your Watch page. Click to play.</p>`,
+        say: "Step six. Publish. In about two minutes your video appears on the Watch page as a card. Click it, and it plays in a popup. Done. Repeat for every video.",
+        dur: 8500
+      },
+      {
+        html: `<div class="brandmark"><img src="assets/lusty-vixens-logo.png" alt="LustyVixens"></div>
+               <h2>That's it 🎬</h2>
+               <p>Upload → copy embed → add → publish. Now go add your first video.</p>`,
+        cls: "title-card",
+        say: "That's it. Upload, copy the embed link, add it, publish. Now go add your first video.",
+        dur: 6500
+      }
+    ];
+
+    const stage = document.getElementById("stage");
+    const progress = document.getElementById("progress");
+    const caption = document.getElementById("caption");
+    const playBtn = document.getElementById("play");
+    const replayBtn = document.getElementById("replay");
+    const voiceChk = document.getElementById("voice");
+
+    // build scenes + progress bars
+    scenes.forEach((s, i) => {
+      const el = document.createElement("div");
+      el.className = "scene " + (s.cls || "");
+      el.dataset.i = i;
+      el.innerHTML = s.html;
+      stage.appendChild(el);
+      const bar = document.createElement("i");
+      progress.appendChild(bar);
+    });
+    const sceneEls = [...stage.querySelectorAll(".scene")];
+    const bars = [...progress.querySelectorAll("i")];
+
+    let idx = -1, playing = false, timer = null;
+
+    function showScene(i) {
+      sceneEls.forEach(el => el.classList.toggle("on", Number(el.dataset.i) === i));
+      bars.forEach((b, bi) => {
+        b.classList.remove("active");
+        b.classList.toggle("done", bi < i);
+      });
+    }
+
+    function speak(text, onEnd, ms) {
+      try { window.speechSynthesis.cancel(); } catch (e) {}
+      if (voiceChk.checked && "speechSynthesis" in window) {
+        const u = new SpeechSynthesisUtterance(text);
+        u.rate = 1.0; u.pitch = 1.0;
+        u.onend = onEnd;
+        u.onerror = () => { timer = setTimeout(onEnd, ms); };
+        // guaranteed advance even if TTS stalls
+        timer = setTimeout(onEnd, ms + 1500);
+        window.speechSynthesis.speak(u);
+      } else {
+        timer = setTimeout(onEnd, ms);
+      }
+    }
+
+    function playScene(i) {
+      if (i >= scenes.length) { finish(); return; }
+      idx = i;
+      const s = scenes[i];
+      showScene(i);
+      caption.textContent = s.say;
+      // animate active progress bar over this scene's duration
+      bars[i].style.setProperty("--d", s.dur + "ms");
+      bars[i].classList.add("active");
+      speak(s.say, () => {
+        if (!playing) return;
+        bars[i].classList.remove("active");
+        bars[i].classList.add("done");
+        playScene(i + 1);
+      }, s.dur);
+    }
+
+    function start() {
+      clearTimeout(timer);
+      playing = true;
+      playBtn.textContent = "⏸ Pause";
+      if (idx < 0 || idx >= scenes.length) playScene(0);
+      else playScene(idx);
+    }
+    function pause() {
+      playing = false;
+      clearTimeout(timer);
+      try { window.speechSynthesis.cancel(); } catch (e) {}
+      playBtn.textContent = "▶ Play";
+    }
+    function finish() {
+      playing = false;
+      playBtn.textContent = "▶ Play";
+      caption.textContent = "Done. Press Replay to watch again.";
+      bars.forEach(b => { b.classList.remove("active"); b.classList.add("done"); });
+    }
+
+    playBtn.addEventListener("click", () => { playing ? pause() : start(); });
+    replayBtn.addEventListener("click", () => { pause(); idx = -1; bars.forEach(b=>b.classList.remove("done","active")); start(); });
+
+    // preload voices
+    if ("speechSynthesis" in window) window.speechSynthesis.getVoices();
+    showScene(0);
+  </script>
+</body>
+</html>
