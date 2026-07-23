@@ -189,10 +189,9 @@ async function initGallery() {
   let activeCategory = "all";
 
   const openPlayer = (video) => {
-    frame.src = video.embed;
-    playerTitle.textContent = video.title || "";
-    modal.classList.remove("hidden");
-    document.body.style.overflow = "hidden";
+    // Option A: open the filehost watch page in a new tab (embeds are blocked by the host)
+    const watchUrl = (video.embed || "").replace("/e/", "/d/");
+    window.open(watchUrl, "_blank", "noopener,noreferrer");
   };
 
   const closePlayer = () => {
