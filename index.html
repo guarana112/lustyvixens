@@ -271,14 +271,23 @@ let VIDEOS = [];
 
 /* convert a videos.json entry into a display card */
 function mapVideo(v){
-  const watch = (v.embed || '').replace('/e/', '/d/'); // filehost watch page
+  // Prefer the multi-host servers list; fall back to a single embed
+  let servers = [];
+  if (Array.isArray(v.servers) && v.servers.length) {
+    servers = v.servers
+      .map(s => ({ n: s.n || s.name || 'Watch', u: String(s.u || s.embed || '').replace('/e/', '/d/') }))
+      .filter(s => s.u);
+  } else if (v.embed) {
+    servers = [{ n: 'Watch ▶', u: v.embed.replace('/e/', '/d/') }];
+  }
+  const link = servers.length ? servers[0].u : '#';
   return {
     title: v.title || 'Untitled',
     thumb: v.thumb || '',
     hasThumb: !!v.thumb,
     dur: v.dur || '',
-    link: watch,
-    servers: [{ n:'Watch ▶', u: watch }],
+    link,
+    servers,
     cats: v.category ? [v.category] : [],
     views: +v.views || 0,
     rating: +v.rating || 0,

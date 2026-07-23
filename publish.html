@@ -378,15 +378,22 @@
         // publish to videos.json via GitHub
         const { json, sha } = await ghGet();
         if (!Array.isArray(json.videos)) json.videos = [];
+        const servers = Array.isArray(d.servers) ? d.servers.map(s => ({ n: s.name, u: s.embed })) : [];
         json.videos.unshift({
           id: "v" + Date.now().toString(36),
           title: title || d.title || "New Drop",
-          category: cat, creator: "", thumb: "", embed: d.embed,
+          category: cat, creator: "", thumb: "",
+          embed: d.embed,
+          servers,
           added: new Date().toISOString().slice(0, 10)
         });
         await ghPut(json, sha, "Add video (file upload): " + (title || d.title || d.filecode));
 
-        setUStatus("✅ Uploaded + published! Live on lustyvixens.com in ~2 min.<br><a href='/' style='color:#8ee0ac;font-weight:800;'>Open site →</a>", "ok");
+        const okNames = (d.servers || []).map(s => s.name).join(", ") || "1 host";
+        const failMsg = (d.errors && d.errors.length)
+          ? "<br><span style='color:#f5d1a3;font-size:13px;'>Skipped: " + escapeHtml(d.errors.join(" | ")).slice(0, 220) + "</span>"
+          : "";
+        setUStatus("✅ Uploaded to: <b>" + escapeHtml(okNames) + "</b>. Published! Live in ~2 min." + failMsg + "<br><a href='/' style='color:#8ee0ac;font-weight:800;'>Open site →</a>", "ok");
         $("u-file").value = ""; $("u-title").value = "";
         loadList();
       } catch (e) {
