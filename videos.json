@@ -1,0 +1,22 @@
+{
+  "videos": [
+    {
+      "id": "v1",
+      "title": "Sample Video One",
+      "category": "amateur",
+      "creator": "Demo Creator",
+      "thumb": "",
+      "embed": "https://dood.to/e/REPLACE_WITH_CODE",
+      "added": "2026-07-22"
+    },
+    {
+      "id": "v2",
+      "title": "Sample Video Two",
+      "category": "solo",
+      "creator": "Demo Creator",
+      "thumb": "",
+      "embed": "https://dood.to/e/REPLACE_WITH_CODE",
+      "added": "2026-07-22"
+    }
+  ]
+}

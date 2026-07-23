@@ -158,6 +158,96 @@ function initAnalytics() {
   set("#metric-creators", new Set(rows.map(row => row.creatorEmail).filter(Boolean)).size);
 }
 
+async function initGallery() {
+  const grid = document.querySelector("#video-grid");
+  if (!grid) return;
+
+  const filtersBox = document.querySelector("#category-filters");
+  const emptyState = document.querySelector("#empty-state");
+  const modal = document.querySelector("#player-modal");
+  const frame = document.querySelector("#player-frame");
+  const playerTitle = document.querySelector("#player-title");
+
+  let videos = [];
+  try {
+    const res = await fetch("videos.json", { cache: "no-store" });
+    const data = await res.json();
+    videos = Array.isArray(data.videos) ? data.videos : [];
+  } catch {
+    videos = [];
+  }
+
+  // Hide unconfigured placeholder entries (embed still says REPLACE)
+  videos = videos.filter(v => v.embed && !v.embed.includes("REPLACE_WITH_CODE"));
+
+  if (!videos.length) {
+    emptyState?.classList.remove("hidden");
+    return;
+  }
+
+  const categories = ["all", ...new Set(videos.map(v => v.category).filter(Boolean))];
+  let activeCategory = "all";
+
+  const openPlayer = (video) => {
+    frame.src = video.embed;
+    playerTitle.textContent = video.title || "";
+    modal.classList.remove("hidden");
+    document.body.style.overflow = "hidden";
+  };
+
+  const closePlayer = () => {
+    frame.src = "";
+    modal.classList.add("hidden");
+    document.body.style.overflow = "";
+  };
+
+  document.querySelector("#player-close")?.addEventListener("click", closePlayer);
+  document.querySelector("#player-backdrop")?.addEventListener("click", closePlayer);
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape" && !modal.classList.contains("hidden")) closePlayer();
+  });
+
+  const renderGrid = () => {
+    const list = activeCategory === "all"
+      ? videos
+      : videos.filter(v => v.category === activeCategory);
+    grid.innerHTML = list.map((v, i) => `
+      <article class="video-card" data-index="${videos.indexOf(v)}">
+        <div class="video-thumb">
+          ${v.thumb
+            ? `<img src="${escapeHtml(v.thumb)}" alt="${escapeHtml(v.title || "")}" loading="lazy">`
+            : `<div class="video-thumb-fallback"><span>▶</span></div>`}
+          <span class="video-play">▶</span>
+        </div>
+        <div class="video-meta">
+          <h3>${escapeHtml(v.title || "Untitled")}</h3>
+          <p>${escapeHtml(v.category || "")}${v.creator ? " · " + escapeHtml(v.creator) : ""}</p>
+        </div>
+      </article>
+    `).join("");
+    grid.querySelectorAll(".video-card").forEach(card => {
+      card.addEventListener("click", () => openPlayer(videos[Number(card.dataset.index)]));
+    });
+  };
+
+  const renderFilters = () => {
+    if (!filtersBox) return;
+    filtersBox.innerHTML = categories.map(cat => `
+      <button class="filter-btn${cat === activeCategory ? " active" : ""}" data-cat="${escapeHtml(cat)}">${escapeHtml(cat)}</button>
+    `).join("");
+    filtersBox.querySelectorAll(".filter-btn").forEach(btn => {
+      btn.addEventListener("click", () => {
+        activeCategory = btn.dataset.cat;
+        renderFilters();
+        renderGrid();
+      });
+    });
+  };
+
+  renderFilters();
+  renderGrid();
+}
+
 function escapeHtml(value) {
   return String(value).replace(/[&<>"']/g, char => ({
     "&": "&amp;",
@@ -198,3 +288,4 @@ if (document.querySelector("#auth-gate")) {
 
 initCreatorForm();
 initAnalytics();
+initGallery();
